@@ -1,8 +1,5 @@
 pipeline{
     agent any
-    tools{
-        maven 'Maven_home'
-    }
     stages{
         stage('Checkout SCM'){
             steps{
@@ -11,15 +8,8 @@ pipeline{
         }
         stage('Prebuild'){
             steps{
+                echo "Test"
             }
         }  
-        stage('Build'){
-            steps{
-            }
-        } 
-        stage('Post Build'){
-            steps{
-            }
         }
-    }
 }
