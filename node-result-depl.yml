@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-result-deployment
+  labels:
+    app: node-result
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-result
+  template:
+    metadata:
+      labels:
+        app: node-result
+    spec:
+      containers:
+      - name: node-result
+        image: kaushiktraining/result-app
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-result-service
+spec:
+  selector:
+    app: node-result
+#  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+#      nodePort: 30001

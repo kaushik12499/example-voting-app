@@ -1,0 +1,49 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis
+    network_mode: bridge
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+  
+  db:
+    image: postgres:9.4
+    network_mode: bridge
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    ports:
+      - "5432:5432"
+
+  py-vote:
+    image: kaushiktraining/vote-app
+    network_mode: bridge
+    restart: always
+    container_name: py-vote
+    ports:
+      - "5000:80"
+    links:
+      - "redis:redis"
+    
+  node-result:
+    image: kaushiktraining/result-app
+    network_mode: bridge
+    restart: always
+    container_name: node-result
+    ports:
+      - "5001:80"
+    links:
+      - "db:db"
+  
+  java-worker:
+    image: kaushiktraining/worker-app
+    network_mode: bridge
+    restart: always
+    container_name: java-worker
+    links:
+      - "redis:redis"
+      - "db:db"

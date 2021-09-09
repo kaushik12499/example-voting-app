@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-voter-deployment
+  labels:
+    app: py-vote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-vote
+  template:
+    metadata:
+      labels:
+        app: py-vote
+    spec:
+      containers:
+      - name: py-vote
+        image: kaushiktraining/vote-app
+        ports:
+        - containerPort: 80
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: py-vote-service
+spec:
+  selector:
+    app: py-vote
+#  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+#      nodePort: 30000
