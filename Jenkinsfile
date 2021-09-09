@@ -23,7 +23,7 @@ pipeline{
                 sh 'docker-compose up -d'
             }
         } 
-        stage('Build'){
+        stage('Post Build'){
             steps{
                 sh 'mvn clean install package'
                 sh 'docker-compose build'
