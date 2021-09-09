@@ -11,23 +11,14 @@ pipeline{
         }
         stage('Prebuild'){
             steps{
-                sh 'mvn clean install package'
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
             }
         }  
         stage('Build'){
             steps{
-                sh 'mvn clean install package'
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
             }
         } 
         stage('Post Build'){
             steps{
-                sh 'mvn clean install package'
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
             }
         }
     }
