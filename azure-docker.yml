@@ -12,7 +12,7 @@
       - curl
       - gnupg-agent
       - software-properties-common
-    USER: "azureuser"
+    USER: "root"
 
   tasks:
 
