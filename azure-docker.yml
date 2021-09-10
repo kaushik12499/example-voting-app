@@ -1,7 +1,7 @@
 ---
 
 - name: Installation of Docker
-  hosts: localhost
+  hosts: azure
   become: yes
   vars:
     CTOP_VERSION: "0.7.3"
@@ -12,7 +12,7 @@
       - curl
       - gnupg-agent
       - software-properties-common
-    USER: "azureuser"
+    USER: "root"
 
   tasks:
 
