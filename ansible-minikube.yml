@@ -1,0 +1,124 @@
+---
+- name: Minikube automation play
+  hosts: localhost
+  gather_facts: true
+
+  pre_tasks:
+
+    # - name: Cloning git repo
+    #   git:
+    #     repo:
+    #     dest: /home/azureuser/K8s
+    
+    - name: Check Minikube's status
+      command: minikube status
+      register: minikube_status
+      changed_when: false
+      ignore_errors: true
+    
+    - name: Display minikube status
+      debug:
+        msg: "{{ minikube_status.stdout.split('\n') }}"
+
+    - name: Start Minikube on necessity
+      command: minikube start
+      when: "not minikube_status.stdout or 'Running' not in minikube_status.stdout"
+
+  tasks:
+
+    - name: Deploying Redis
+      command: kubectl apply -f redis-depl.yml
+      # args:
+      #   chdir: /home/azureuser/K8s
+      register: depl_output1
+      changed_when: " 'unchanged' not in depl_output1.stdout"
+    
+    - name: Deployment rollout status
+      debug:
+        msg: "{{depl_output1.stdout.split('\n')}}"
+
+    - name: Deploying Postgres
+      command: kubectl apply -f postgres-depl.yml
+      # args:
+      #   chdir: /home/azureuser/K8s
+      register: depl_output2
+      changed_when: " 'unchanged' not in depl_output2.stdout"
+
+    - name: Deployment rollout status
+      debug:
+        msg: "{{depl_output2.stdout.split('\n')}}"
+
+    - name: Deploying Python App  
+      command: kubectl apply -f py-depl.yml
+      # args:
+      #   chdir: /home/azureuser/K8s
+      register: depl_output3
+      changed_when: " 'unchanged' not in depl_output3.stdout"
+
+    - name: Deployment rollout status
+      debug:
+        msg: "{{depl_output3.stdout.split('\n')}}"
+      
+    - name: Deploying Node result App
+      command: kubectl apply -f node-result-depl.yml
+      # args:
+      #   chdir: /home/azureuser/K8s
+      register: depl_output4
+      changed_when: " 'unchanged' not in depl_output4.stdout"
+
+    - name: Deployment rollout status
+      debug:
+        msg: "{{depl_output4.stdout.split('\n')}}"
+      
+    - name: Deploying Worker App
+      command: kubectl apply -f java-worker-depl.yml
+      # args:
+      #   chdir: /home/azureuser/K8s
+      register: depl_output5
+      changed_when: " 'unchanged' not in depl_output5.stdout"
+
+    - name: Deployment rollout status
+      debug:
+        msg: "{{depl_output5.stdout.split('\n')}}"
+
+  post_tasks:
+
+    # - name: Adding firewall rule 8085,8086
+    #   command: firewall-cmd --add-port 8085/tcp --permanent
+    #   command: firewall-cmd --add-port 8086/tcp --permanent
+    #   command: firewall-cmd --reload
+
+    - name: Adding firewall rule 8085,8086
+      become: yes
+      ufw:
+        rule: allow
+        port: 8085:8086
+        proto: tcp
+     # command: ufw allow 8085
+     # command: ufw allow 8086
+     # command: ufw reload
+
+#    - name: Port forwarding Python service(8085)
+#      command: kubectl port-forward --address 0.0.0.0 service/py-vote-service 8085:80 2>&1 >/dev/null &
+#      register: py_portfwd_pid
+
+#    - name: Port forwarding Node service(8086)
+#      command: kubectl port-forward --address 0.0.0.0 service/node-result-service 8086:80 2>&1 >/dev/null &
+#      register: node_portfwd_pid
+
+    - name: Port Script
+      copy:
+        content: "kubectl port-forward --address 0.0.0.0 service/node-result-service 8086:80 2>&1 >/dev/null &\n
+        kubectl port-forward --address 0.0.0.0 service/py-vote-service 8085:80 2>&1 >/dev/null &"
+        dest: /home/azureuser/example-voting-app/port.sh
+    
+    - name: Run Script
+      script: ./port.sh
+
+    - name: Logging data
+      copy:
+        content: "{{minikube_status.stdout}}\n\n~Deployment Rollouts:\n\n{{depl_output1.stdout}}
+        \n\n{{depl_output2.stdout}}\n\n{{depl_output3.stdout}}\n\n{{depl_output4.stdout}}
+        \n\n{{depl_output5.stdout}}"
+        dest: /home/azureuser/minikube.log
+    
