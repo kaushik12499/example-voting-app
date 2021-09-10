@@ -8,17 +8,17 @@ pipeline{
         }
         stage('Docker'){
             steps{
-                sh "sudo ansible-playbook azure-docker.yml"
+                sh "ansible-playbook azure-docker.yml"
             }
         }
         stage('Kubernetes and minikube'){
             steps{
-                sh "sudo ansible-playbook minikube.yml"
+                sh "ansible-playbook minikube.yml"
             }
         }
         stage('Deploy'){
             steps{
-                sh "sudo ansible-playbook ansible-minikube.yml"
+                sh "ansible-playbook ansible-minikube.yml"
             }
         }  
         }
