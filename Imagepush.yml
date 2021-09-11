@@ -6,5 +6,5 @@
   gather_facts: true
   tasks:
       - name: Run Script
-      script:
-        cmd: /home/azureuser/example-voting-app/Dockerctrler.sh
+        script:
+          cmd: /home/azureuser/example-voting-app/Dockerctrler.sh
