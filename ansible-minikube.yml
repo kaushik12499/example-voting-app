@@ -113,10 +113,16 @@
         kubectl port-forward --address 0.0.0.0 service/py-vote-service 8085:80 2>&1 >/dev/null &"
         dest: /home/azureuser/example-voting-app/port.sh
     
+    - name: Change perm
+      become: yes  
+      command: chmod a+x port.sh    
+      args: 
+        chdir: /home/azureuser/example-voting-app
+        
     - name: Run Script
       script: /home/azureuser/example-voting-app/port.sh
 #      args:
-#        chdir: /home/azureuser/example-voting-app
+#        chdir: /home/azureuser/example-voting-app/home/azureuser/example-voting-app
     - name: Logging data
       copy:
         content: "{{minikube_status.stdout}}\n\n~Deployment Rollouts:\n\n{{depl_output1.stdout}}
