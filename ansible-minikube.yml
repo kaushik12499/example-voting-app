@@ -118,9 +118,10 @@
         chdir: /home/azureuser/example-voting-app
         
     - name: Run Script
-      script: /home/azureuser/example-voting-app/port.sh
-#      args:
-#        chdir: /home/azureuser/example-voting-app/home/azureuser/example-voting-app
+      script: ./port.sh
+      args:
+        chdir: /home/azureuser/example-voting-app/
+        
     - name: Logging data
       copy:
         content: "{{minikube_status.stdout}}\n\n~Deployment Rollouts:\n\n{{depl_output1.stdout}}
