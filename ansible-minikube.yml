@@ -5,10 +5,10 @@
 
   pre_tasks:
 
-     - name: Cloning git repo
-       git:
-         repo: https://github.com/kaushik12499/example-voting-app.git
-         dest: /home/azureuser/example-voting-app
+    - name: Cloning git repo
+      git:
+        repo: https://github.com/kaushik12499/example-voting-app.git
+        dest: /home/azureuser/example-voting-app
     
     - name: Check Minikube's status
       command: minikube status
