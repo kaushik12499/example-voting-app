@@ -1,0 +1,10 @@
+---
+
+- name: Expose deployments
+  hosts: azure
+  become: yes
+  gather_facts: true
+  tasks:
+      - name: Run Script
+        script:
+          cmd: /home/azureuser/example-voting-app/port.sh
