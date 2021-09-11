@@ -1,6 +1,6 @@
 ---
 - name: Install minikube
-  hosts: localhost
+  hosts: azure
   gather_facts: no
   become: yes
   tasks:
