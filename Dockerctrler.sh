@@ -1,6 +1,6 @@
 echo "Building Individual Dockerfiles"
 
-cd vote
+cd /home/azureuser/example-voting-app/vote/
 docker build -t kaushiktraining/vote-app .
 cd ..
 cd result
