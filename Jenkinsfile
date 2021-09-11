@@ -29,7 +29,7 @@ pipeline{
         }  
         stage('PF'){
             steps{
-                sh "ansible-playbook -i hosts DeplyForward.yml"
+                sh "ansible-playbook -i hosts DeployForward.yml"
             }
         }
         }
