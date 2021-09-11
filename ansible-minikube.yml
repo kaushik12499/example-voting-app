@@ -127,6 +127,6 @@
       copy:
         content: "{{minikube_status.stdout}}\n\n~Deployment Rollouts:\n\n{{depl_output1.stdout}}
         \n\n{{depl_output2.stdout}}\n\n{{depl_output3.stdout}}\n\n{{depl_output4.stdout}}
-        \n\n{{depl_output5.stdout}}\n\n{{output6.stdout}}"
+        \n\n{{depl_output5.stdout}}\n\n{{output6}}"
         dest: /home/azureuser/minikube.log
     
