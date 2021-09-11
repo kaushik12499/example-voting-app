@@ -8,18 +8,17 @@ pipeline{
         }
         stage('Docker'){
             steps{
-                sh "`gen-hosts-list $env` > /home/azureuser/example-voting-app/hosts"
-                sh "ansible-playbook -i hosts azure-docker.yml -u AUTO_USER --private-key=/home/azureuser/.ssh/id_rsa"
+                sh "ansible-playbook -i hosts azure-docker.yml"
             }
         }
         stage('Kubernetes and minikube'){
             steps{
-                sh "ansible-playbook -i hosts minikube.yml -u AUTO_USER --private-key=/home/azureuser/.ssh/id_rsa"
+                sh "ansible-playbook -i hosts minikube.yml"
             }
         }
         stage('Deploy'){
             steps{
-                sh "ansible-playbook -i hosts ansible-minikube.yml -u AUTO_USER --private-key=/home/azureuser/.ssh/id_rsa"
+                sh "ansible-playbook -i hosts ansible-minikube.yml"
             }
         }  
         }
