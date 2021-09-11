@@ -1,6 +1,6 @@
 ---
 - name: Minikube automation play
-  hosts: localhost
+  hosts: azure
   gather_facts: true
 
   pre_tasks:
@@ -27,7 +27,7 @@
   tasks:
 
     - name: Deploying Redis
-      command: kubectl apply -f redis-depl.yml
+      command: kubectl apply -f /home/azureuser/example-voting-app/redis-depl.yml
       # args:
       #   chdir: /home/azureuser/K8s
       register: depl_output1
@@ -38,7 +38,7 @@
         msg: "{{depl_output1.stdout.split('\n')}}"
 
     - name: Deploying Postgres
-      command: kubectl apply -f postgres-depl.yml
+      command: kubectl apply -f /home/azureuser/example-voting-app/postgres-depl.yml
       # args:
       #   chdir: /home/azureuser/K8s
       register: depl_output2
@@ -49,7 +49,7 @@
         msg: "{{depl_output2.stdout.split('\n')}}"
 
     - name: Deploying Python App  
-      command: kubectl apply -f py-depl.yml
+      command: kubectl apply -f /home/azureuser/example-voting-app/py-depl.yml
       # args:
       #   chdir: /home/azureuser/K8s
       register: depl_output3
@@ -60,7 +60,7 @@
         msg: "{{depl_output3.stdout.split('\n')}}"
       
     - name: Deploying Node result App
-      command: kubectl apply -f node-result-depl.yml
+      command: kubectl apply -f /home/azureuser/example-voting-app/node-result-depl.yml
       # args:
       #   chdir: /home/azureuser/K8s
       register: depl_output4
@@ -71,7 +71,7 @@
         msg: "{{depl_output4.stdout.split('\n')}}"
       
     - name: Deploying Worker App
-      command: kubectl apply -f java-worker-depl.yml
+      command: kubectl apply -f /home/azureuser/example-voting-app/java-worker-depl.yml
       # args:
       #   chdir: /home/azureuser/K8s
       register: depl_output5
@@ -114,7 +114,8 @@
     
     - name: Run Script
       script: ./port.sh
-
+#      args:
+#        chdir: /home/azureuser/example-voting-app
     - name: Logging data
       copy:
         content: "{{minikube_status.stdout}}\n\n~Deployment Rollouts:\n\n{{depl_output1.stdout}}
