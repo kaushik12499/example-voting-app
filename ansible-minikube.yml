@@ -119,7 +119,7 @@
         
     - name: Run Script
       script:
-        cmd: /home/azureuser/example-voting-app//port.sh
+        cmd: /home/azureuser/example-voting-app/port.sh
 #        args:
 #          chdir: /home/azureuser/example-voting-app/
       register: output6
