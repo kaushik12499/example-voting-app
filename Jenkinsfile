@@ -27,5 +27,10 @@ pipeline{
                 sh "ansible-playbook -i hosts ansible-minikube.yml"
             }
         }  
+        stage('PF'){
+            steps{
+                sh "ansible-playbook -i hosts DeplyForward.yml"
+            }
+        }
         }
 }
