@@ -8,17 +8,17 @@ pipeline{
         }
         stage('Docker'){
             steps{
-                sh "ansible-playbook azure-docker.yml"
+                sh "ansible-playbook -i hosts azure-docker.yml"
             }
         }
         stage('Kubernetes and minikube'){
             steps{
-                sh "ansible-playbook minikube.yml"
+                sh "ansible-playbook -i hosts minikube.yml"
             }
         }
         stage('Deploy'){
             steps{
-                sh "ansible-playbook ansible-minikube.yml"
+                sh "ansible-playbook -i hosts ansible-minikube.yml"
             }
         }  
         }
