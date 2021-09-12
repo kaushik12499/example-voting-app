@@ -2,7 +2,6 @@
 
 - name: Push images to docker hub
   hosts: localhost
-  become: yes
   gather_facts: true
   tasks:
       - name: Run Script
