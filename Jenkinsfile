@@ -6,6 +6,19 @@ pipeline{
                 git url: 'https://github.com/kaushik12499/example-voting-app.git'
             }
         }
+        stage('SonarQube'){
+            steps{
+            script {
+              scannerHome = tool 'Example-voting-app'
+            }
+            withSonarQubeEnv('Example-voting-app') {
+             sh "${scannerHome}/bin/sonar-scanner \
+             -D sonar.login=admin \
+             -D sonar.password=kaushik \
+             -D sonar.projectKey=Example-voting-app"
+            }
+          }
+        }
          stage('Docker'){
             steps{
                 sh "ansible-playbook azure-docker.yml"
