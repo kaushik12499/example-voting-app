@@ -8,7 +8,7 @@ pipeline{
         }
          stage('Docker'){
             steps{
-                sh "ansible-playbook -i hosts azure-docker.yml"
+                sh "ansible-playbook azure-docker.yml"
                 sh "sleep 60"
             }
         }
