@@ -1,7 +1,7 @@
 ---
 
 - name: Expose deployments
-  hosts: azure
+  hosts: localhost
   become: yes
   gather_facts: true
   tasks:
